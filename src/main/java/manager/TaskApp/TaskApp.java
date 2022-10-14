@@ -1,7 +1,8 @@
 package manager.TaskApp;
 
-import java.sql.Connection;
-import util.ConnectionFactory;
+import controller.ProjectController;
+import java.sql.SQLException;
+import model.Project;
 
 /**
  *
@@ -9,9 +10,13 @@ import util.ConnectionFactory;
  */
 public class TaskApp {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws SQLException {
         
-        Connection c = ConnectionFactory.getConnection();
+        ProjectController projectController = new ProjectController();
         
+        Project project = new Project();
+        project.setName("Teste");
+        project.setDescription("Descrição");
+        projectController.save(project); 
     }
 }
