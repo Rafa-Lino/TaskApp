@@ -15,6 +15,7 @@ package view;
  */
 
 import java.awt.Color;
+import java.awt.Cursor;
 import java.awt.Font;
 
 
@@ -26,6 +27,7 @@ public class MainScreen extends javax.swing.JFrame {
     public MainScreen() {
         initComponents();
         decorateTableTask();
+        jLabelProjectsAdd.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
     }
 
     /**
@@ -141,6 +143,11 @@ public class MainScreen extends javax.swing.JFrame {
 
         jLabelProjectsAdd.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabelProjectsAdd.setIcon(new javax.swing.ImageIcon(getClass().getResource("/plus_2.png"))); // NOI18N
+        jLabelProjectsAdd.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabelProjectsAddMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanelProjectsLayout = new javax.swing.GroupLayout(jPanelProjects);
         jPanelProjects.setLayout(jPanelProjectsLayout);
@@ -311,6 +318,12 @@ public class MainScreen extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jLabelProjectsAddMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelProjectsAddMouseClicked
+        // TODO add your handling code here:
+        ProjectDialogScreen projectDialogScreen = new ProjectDialogScreen(this, rootPaneCheckingEnabled);
+        projectDialogScreen.setVisible(true);
+    }//GEN-LAST:event_jLabelProjectsAddMouseClicked
 
     /**
      * @param args the command line arguments
