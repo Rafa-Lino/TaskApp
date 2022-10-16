@@ -544,9 +544,10 @@ public class MainScreen extends javax.swing.JFrame {
             
             projectsModel.addElement(project);
         }
-        
+              
         jListProjects.setModel(projectsModel);
-        
+        jListProjects.setSelectedIndex(0);
+                
     }
     
 
