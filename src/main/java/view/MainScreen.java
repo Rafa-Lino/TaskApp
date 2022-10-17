@@ -9,6 +9,10 @@ package view;
 //<a href="https://www.flaticon.com/free-icons/list" title="list icons">List icons created by Freepik - Flaticon</a>
 
 //<a href="https://www.flaticon.com/free-icons/add" title="add icons">Add icons created by Pixel perfect - Flaticon</a>
+
+// <a href="https://www.flaticon.com/free-icons/minus" title="minus icons">Minus icons created by Freepik - Flaticon</a>
+
+//<a href="https://www.flaticon.com/free-icons/user-interface" title="user interface icons">User interface icons created by Creatype - Flaticon</a>
 /**
  *
  * @author Rafael
@@ -28,6 +32,8 @@ import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
 import model.Project;
 import model.Task;
+import util.ButtonColumnCellRenderer;
+import util.DeadLineColumnCellRenderer;
 import util.TaskTableModel;
 
 
@@ -42,9 +48,9 @@ public class MainScreen extends javax.swing.JFrame {
     
     public MainScreen() {
         initComponents();
-        decorateTableTask();
         initDataController();
         initComponentsModel();
+        decorateTableTask();
         
         jLabelProjectsAdd.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         jLabelTasksAdd.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
@@ -258,6 +264,7 @@ public class MainScreen extends javax.swing.JFrame {
 
         jPanel5.setBackground(new java.awt.Color(255, 255, 255));
         jPanel5.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        jPanel5.setLayout(new java.awt.BorderLayout());
 
         jPanelEmptyList.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -297,26 +304,7 @@ public class MainScreen extends javax.swing.JFrame {
                 .addContainerGap(161, Short.MAX_VALUE))
         );
 
-        javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
-        jPanel5.setLayout(jPanel5Layout);
-        jPanel5Layout.setHorizontalGroup(
-            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 627, Short.MAX_VALUE)
-            .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jPanel5Layout.createSequentialGroup()
-                    .addContainerGap()
-                    .addComponent(jPanelEmptyList, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addContainerGap()))
-        );
-        jPanel5Layout.setVerticalGroup(
-            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 464, Short.MAX_VALUE)
-            .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jPanel5Layout.createSequentialGroup()
-                    .addContainerGap()
-                    .addComponent(jPanelEmptyList, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addContainerGap()))
-        );
+        jPanel5.add(jPanelEmptyList, java.awt.BorderLayout.CENTER);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -392,14 +380,23 @@ public class MainScreen extends javax.swing.JFrame {
        
         int rowIndex = jTableTasks.rowAtPoint(evt.getPoint());
         int columnIndex = jTableTasks.columnAtPoint(evt.getPoint());
-        
+        Task task = taskModel.getTasks().get(rowIndex);
         switch(columnIndex){
             
-            case 3:                
+            case 3:               
                 
-                Task task = taskModel.getTasks().get(rowIndex);
                 taskController.update(task);
             break;
+            
+            case 5:
+                
+                taskController.removeById(task.getId());
+                taskModel.getTasks().remove(task);
+                
+                int projectIndex = jListProjects.getSelectedIndex();
+                Project project = (Project) projectsModel.get(projectIndex);
+                loadTasks(project.getId());
+                break;
             
 
    
@@ -498,6 +495,11 @@ public class MainScreen extends javax.swing.JFrame {
         jTableTasks.getTableHeader().setFont(new Font("Segoe UI", Font.BOLD, 14));
         jTableTasks.getTableHeader().setBackground(new Color(51, 204, 255));
         jTableTasks.getTableHeader().setForeground(new Color(255, 255, 255));
+        
+        jTableTasks.getColumnModel().getColumn(2).setCellRenderer(new DeadLineColumnCellRenderer());
+        
+        jTableTasks.getColumnModel().getColumn(4).setCellRenderer(new ButtonColumnCellRenderer("drawing_24"));
+        jTableTasks.getColumnModel().getColumn(5).setCellRenderer(new ButtonColumnCellRenderer("minus_24"));
         //criando um sorter automático para a table
         jTableTasks.setAutoCreateRowSorter(true);
         
