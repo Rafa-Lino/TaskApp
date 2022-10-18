@@ -30,6 +30,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
+import javax.swing.JOptionPane;
 import model.Project;
 import model.Task;
 import util.ButtonColumnCellRenderer;
@@ -295,13 +296,13 @@ public class MainScreen extends javax.swing.JFrame {
         jPanelEmptyListLayout.setVerticalGroup(
             jPanelEmptyListLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelEmptyListLayout.createSequentialGroup()
-                .addGap(110, 110, 110)
+                .addGap(134, 134, 134)
                 .addComponent(jLabelEmptyListIcon)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabelEmptyListTitle)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabelEmptyListSubTitle)
-                .addContainerGap(161, Short.MAX_VALUE))
+                .addContainerGap(137, Short.MAX_VALUE))
         );
 
         jPanel5.add(jPanelEmptyList, java.awt.BorderLayout.CENTER);
@@ -388,6 +389,9 @@ public class MainScreen extends javax.swing.JFrame {
                 taskController.update(task);
             break;
             
+            case 4:
+                alterarTarefa(task);
+                break;
             case 5:
                 
                 taskController.removeById(task.getId());
@@ -552,5 +556,29 @@ public class MainScreen extends javax.swing.JFrame {
                 
     }
     
+    private void alterarTarefa(Task task) {
 
+        TaskDialogScreen taskDialogScreen = new TaskDialogScreen(this, rootPaneCheckingEnabled, true);
+
+        int projectIndex = jListProjects.getSelectedIndex();
+        Project project = (Project) projectsModel.get(projectIndex);
+        taskDialogScreen.setProject(project);
+
+        taskDialogScreen.loadFields(task);
+        taskDialogScreen.setVisible(true);
+
+        
+        
+        taskDialogScreen.addWindowListener(new WindowAdapter() {
+            public void windowClosed(WindowEvent e) {
+                int projectIndex = jListProjects.getSelectedIndex();
+                Project project = (Project) projectsModel.get(projectIndex);
+                
+                loadTasks(project.getId());
+            }
+        });
+    
+       
+    }
+    
 }

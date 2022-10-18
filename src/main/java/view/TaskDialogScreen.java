@@ -21,12 +21,26 @@ public class TaskDialogScreen extends javax.swing.JDialog {
 
     TaskController controller;
     Project project;
+    boolean taskUpdate = false;
+    int idTaskUpdate = 0;
+    
     
     public TaskDialogScreen(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
+        construtor();
+    }
+    
+    public TaskDialogScreen(java.awt.Frame parent, boolean modal, boolean taskUpdate) {
+        super(parent, modal);
+        construtor();
+        this.taskUpdate = taskUpdate;
+    }
+    
+    public void construtor () {
         initComponents();
         jLabelToolBarSave.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         controller = new TaskController();
+       
     }
 
     /**
@@ -205,13 +219,24 @@ public class TaskDialogScreen extends javax.swing.JDialog {
                 task.setDescription(jTextAreaDescription.getText());
                 task.setNotes(jTextAreaNotes.getText());
                 task.setIsCompleted(false);
+                
                 SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-                Date deadline = null;
+                Date deadline = null; 
                 deadline = dateFormat.parse(jFormatteddeadline.getText());
                 task.setDeadline(deadline);
-                controller.save(task);
+                
+                if (taskUpdate) {
+
+                    task.setId(idTaskUpdate);
+                   // task.setIsCompleted((controller.findOne(task.getId()).isIsCompleted()));
+                    controller.update(task);
+                } else {
+
+                    controller.save(task);
+                }
+                
                 JOptionPane.showMessageDialog(rootPane, "Tarefa salva com sucesso!");
-                 this.dispose();
+                this.dispose();
             
             } else {
                 JOptionPane.showMessageDialog(rootPane, "Os campos [nome] e [prazo] são obrigatórios.");
@@ -286,7 +311,19 @@ public class TaskDialogScreen extends javax.swing.JDialog {
     public void setProject(Project project) {
         this.project = project;
     }
+    
+    
+    public void loadFields(Task task) {
 
+        jTextFieldName.setText(task.getName());
+        jTextAreaDescription.setText(task.getDescription());
+        jTextAreaNotes.setText(task.getNotes());
+
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+
+        jFormatteddeadline.setText(dateFormat.format(task.getDeadline()));
+        idTaskUpdate = task.getId();
+    }
     
     
 
