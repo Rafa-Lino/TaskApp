@@ -32,7 +32,10 @@ Como banco de dados, foi utilizado o MySQL.
 
 <img alt="TaskAppImage" height="450" src="https://cdn.discordapp.com/attachments/468483471468265492/1031792840994463804/TaskApp.png">
 <br/>
-[Vídeo em breve]
+
+
+
+https://user-images.githubusercontent.com/101367833/198305933-0ad86263-2f9a-46b0-8ee2-f9c637aaa864.mp4
 
 
 ##
