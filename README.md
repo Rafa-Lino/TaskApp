@@ -45,13 +45,13 @@ Como banco de dados, foi utilizado o MySQL.
 4) Entre na pasta "Banco_de_Dados" e importe o arquivo "gerenciadordetarefas.sql" no MySQL;
 5) Inicie MainScreen.java
 
-### Em caso de erro com o banco de dados: 
+### Em caso de erro na importação do banco de dados: 
 
 1) Crie um novo banco de dados com as tabelas "projects" e "tasks"
 
 2) As tabelas "projects" e "tasks" devem ser estruturada da seguinte forma:
 
-[Modelos em breve]
+<img alt="ER" height="300" src="https://cdn.discordapp.com/attachments/1030611529307004939/1035180964034396190/ER.jpeg">
 
 3) Após a criação e configuração do novo banco de dados, acesse o arquivo "ConnectionFactory.java" e configure as variáveis de acordo com as configurações do novo SGBD:
 <div>
